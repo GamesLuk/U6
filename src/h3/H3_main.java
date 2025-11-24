@@ -1,33 +1,73 @@
 package h3;
 
-import java.util.Arrays;
+import java.util.*;
 import java.util.random.RandomGenerator;
 
 public class H3_main {
 
     public static void main(String[] args) {
 
-        int[][] einheiten = {
-                {50000, 20000, 10000, 5000, 2000, 1000, 500, 200, 100, 50, 20, 10, 5, 2, 1},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        int[][] x = {
+                {0,0},
+                {1,2},
+                {1,3,2,4},
+                {1,2,-3,-4},
+                {1,2,3,-3, -4}
         };
 
-        int input = RandomGenerator.getDefault().nextInt(1, 100_000);
-
-        System.out.println("Input amount: " + input);
-
-        for (int i = 0; i < einheiten[0].length; i++) {
-            System.out.println("Now checking: " + einheiten[0][i]);
-            while(einheiten[0][i] <= input){
-                input -= einheiten[0][i];
-                System.out.println("Subtracting " + einheiten[0][i] + " from input. New input: " + input);
-                einheiten[1][i]++;
-            }
+        for (int i = 0; i < x.length; i++) {
+            System.out.println("Row " + i + ": " + Arrays.toString(x[i]));
+            System.out.println("Return value of 1: " + methode(x[i]));
+            System.out.println("Return value of 2: " + methode1(x[i]));
+            System.out.println("--------------------------------------------------");
         }
 
-        System.out.println("Output: " + Arrays.toString(einheiten[1]));
-        System.out.println("Input amount: " + input);
-
     }
+
+    // Am Beispiel 1
+    public static int methode(int[] a) {
+        int max = -1;
+        int k = a.length - 1;   // hier: 4
+        for (int i = 0; i < k; i++) {   // hier: i = 0,1,2,3
+            for (int j = 0; j < k; j++) {   // hier: (i, j) =
+                // (0,0),(0,1),(0,2),(0,3),
+                // (1,0),(1,1),(1,2),(1,3),
+                // (2,0),(2,1),(2,2),(2,3),
+                // (3,0),(3,1),(3,2),(3,3)
+                if (a[j] > a[i]) {
+                    max = a[j];
+                }
+            }
+        }
+        return max;
+    }
+
+    public static int methode1(int[] a) {
+        List<Integer> list = new ArrayList<>();
+
+        for (int value : a) {
+            list.add(value);
+        }
+
+        list.sort(Integer::compareTo);
+        System.out.println(list.toString());
+        Set<Integer> set = new HashSet<>();
+
+        for (int value : list) {
+            set.add(Math.abs(value));
+        }
+
+        System.out.println(set.toString());
+
+        int secondLargest;
+        try {
+            secondLargest = (int) set.toArray()[set.size() - 2];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return -1;
+        }
+
+        return list.contains(secondLargest) ? secondLargest : -secondLargest;
+    }
+
 
 }

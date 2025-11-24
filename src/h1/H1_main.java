@@ -14,6 +14,7 @@ public class H1_main {
     }
 
     public static int squared(int x) {
+        x++;
         return x * x;
     }
 
