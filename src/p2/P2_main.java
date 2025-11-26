@@ -1,36 +1,32 @@
 package p2;
 
-import java.util.Arrays;
+import java.util.*;
 import java.util.random.RandomGenerator;
 
 public class P2_main {
 
     public static void main(String[] args) {
 
-        int[] numbers = {
-                RandomGenerator.getDefault().nextInt(10),
-                RandomGenerator.getDefault().nextInt(10),
-                RandomGenerator.getDefault().nextInt(10),
-                RandomGenerator.getDefault().nextInt(10),
-                RandomGenerator.getDefault().nextInt(10)
-        };
-        int max;
-        int minIndex;
+        int[] x = RandomGenerator.getDefault().ints(5, 0, 20).toArray();
+        int[] y = RandomGenerator.getDefault().ints(5, 0, 20).toArray();
 
-        minIndex = -1;
-        max = -9_999_999;
+        System.out.println("x = " + Arrays.toString(x));
+        System.out.println("x -> " + pairwiseDifferent(x));
+        System.out.println("y = " + Arrays.toString(y));
+        System.out.println("y -> " + pairwiseDifferent(y));
 
-        for (int i = 0; i < numbers.length; i++) {
-            if (max < numbers[i] || max == -9_999_999) {
-                max = numbers[i];
-                minIndex = i;
-            }
+    }
+
+    public static boolean pairwiseDifferent(int[] someNumbers) {
+        List<Integer> list = new ArrayList<>();
+
+        for (int someNumber : someNumbers) {
+            list.add(someNumber);
         }
 
-        System.out.println("Array: " + Arrays.toString(numbers));
-        System.out.println("Max: " + max);
-        System.out.println("Min index: " + minIndex);
+        Set<Integer> set = new HashSet<>(list);
 
+        return set.size() == list.size();
     }
 
 }

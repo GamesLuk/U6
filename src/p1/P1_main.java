@@ -1,30 +1,20 @@
 package p1;
 
+import java.util.random.RandomGenerator;
+
 public class P1_main {
 
     public static void main(String[] args) {
 
-        int x = 0;
-        while(x <= 10) {
-            x = x + 1;
-            System.out.print(x);
-        }
+        int n = RandomGenerator.getDefault().nextInt(100);
+        System.out.println("n = " + n);
+        System.out.println("n^2 = " + squared(n));
 
-        System.out.println("------------");
+    }
 
-        for (int i = 0; i <= 10; ) {
-            i++;
-            System.out.print(i);
-        }
-
-        System.out.println("------------");
-
-        int j = 0;
-        do {
-            j++;
-            System.out.print(j);
-        } while (j <= 10);
-
+    public static int squared(int x) {
+        x++;
+        return x * x;
     }
 
 }

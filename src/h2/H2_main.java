@@ -1,32 +1,29 @@
 package h2;
 
-import java.util.*;
-import java.util.random.RandomGenerator;
-
 public class H2_main {
 
     public static void main(String[] args) {
 
-        int[] x = RandomGenerator.getDefault().ints(5, 0, 20).toArray();
-        int[] y = RandomGenerator.getDefault().ints(5, 0, 20).toArray();
+        int[] a = {1, 2, 3};
+        int[] b = {1, 2, 4};
+        int[] c = {1, 3, 2};
+        int[] d = {1, 2};
+        int[] e = {1, 2, 3};
 
-        System.out.println("x = " + Arrays.toString(x));
-        System.out.println("x -> " + pairwiseDifferent(x));
-        System.out.println("y = " + Arrays.toString(y));
-        System.out.println("y -> " + pairwiseDifferent(y));
-
+        System.out.println("a + b -> " + compareArrays(a, b));
+        System.out.println("c + d -> " + compareArrays(c, d));
+        System.out.println("a + e -> " + compareArrays(a, e));
     }
 
-    public static boolean pairwiseDifferent(int[] someNumbers) {
-        List<Integer> list = new ArrayList<>();
+    public static boolean compareArrays(int[] a, int[] b) {
+        if (a.length != b.length) return false;
 
-        for (int someNumber : someNumbers) {
-            list.add(someNumber);
+        for (int i = 0; i < a.length; i++) {
+            if (a[i] != b[i]) {
+                return false;
+            }
         }
-
-        Set<Integer> set = new HashSet<>(list);
-
-        return set.size() == list.size();
+        return true;
     }
 
 }

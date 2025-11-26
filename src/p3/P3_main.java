@@ -1,53 +1,71 @@
 package p3;
 
+import java.util.*;
+
 public class P3_main {
 
     public static void main(String[] args) {
 
-        int[][] matrix = {
-                {1, 2, 3},
-                {4, 5, 6},
-                {7, 8, 9}
+        int[][] x = {
+                {0,0},
+                {1,2},
+                {1,3,2,4},
+                {1,2,-3,-4},
+                {1,2,3,-3, -4}
         };
 
-        printMatrix(matrix);
-
-        int sum = 0;
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                sum += matrix[i][j];
-                matrix[i][j] += 1;
-            }
+        for (int i = 0; i < x.length; i++) {
+            System.out.println("Row " + i + ": " + Arrays.toString(x[i]));
+            System.out.println("Return value of 1: " + methode(x[i]));
+            System.out.println("Return value of 2: " + methode1(x[i]));
+            System.out.println("--------------------------------------------------");
         }
-
-        printMatrix(matrix);
-        System.out.println("Sum: " + sum);
-
-        matrix = new int[][] {
-                {1, 2, 3},
-                {4, 5, 6},
-                {7, 8, 9}
-        };
-        int[][] newMatrix = new int[matrix.length][matrix[0].length];
-
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                newMatrix[j][matrix.length - i -1] = matrix[i][j];
-            }
-        }
-
-        printMatrix(newMatrix);
 
     }
 
-    public static void printMatrix(int[][] matrix){
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                System.out.print(matrix[i][j] + " ");
+    // Am Beispiel 1
+    public static int methode(int[] a) {
+        int max = -1;
+        int k = a.length - 1;   // hier: 4
+        for (int i = 0; i < k; i++) {   // hier: i = 0,1,2,3
+            for (int j = 0; j < k; j++) {   // hier: (i, j) =
+                // (0,0),(0,1),(0,2),(0,3),
+                // (1,0),(1,1),(1,2),(1,3),
+                // (2,0),(2,1),(2,2),(2,3),
+                // (3,0),(3,1),(3,2),(3,3)
+                if (a[j] > a[i]) {
+                    max = a[j];
+                }
             }
-            System.out.println();
         }
-        System.out.println("--------");
+        return max;
+    }
+
+    public static int methode1(int[] a) {
+        List<Integer> list = new ArrayList<>();
+
+        for (int value : a) {
+            list.add(value);
+        }
+
+        list.sort(Integer::compareTo);
+        System.out.println(list.toString());
+        Set<Integer> set = new HashSet<>();
+
+        for (int value : list) {
+            set.add(Math.abs(value));
+        }
+
+        System.out.println(set.toString());
+
+        int secondLargest;
+        try {
+            secondLargest = (int) set.toArray()[set.size() - 2];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return -1;
+        }
+
+        return list.contains(secondLargest) ? secondLargest : -secondLargest;
     }
 
 }
